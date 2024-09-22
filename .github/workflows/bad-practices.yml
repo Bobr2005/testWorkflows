@@ -1,0 +1,16 @@
+stages:
+  - build
+  - deploy
+
+build_job:
+  stage: build
+  script:
+    - apt-get update
+    - apt-get install nodejs npm
+    - npm install
+    - npm run build
+
+deploy_job:
+  stage: deploy
+  script:
+    - scp -r * user@server:/path/to/deploy
