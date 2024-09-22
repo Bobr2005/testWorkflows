@@ -17,9 +17,9 @@ jobs:
           sudo apt-get install -y nodejs npm 
 
       - name: Lint code
-        run: |
-          npm install eslint 
+        run: npm install eslint
+           
 
       - name: Run tests
-        run: |
-          npm test 
+        run: npm test 
+          
