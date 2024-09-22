@@ -9,18 +9,18 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Обновленная версия checkout
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3  # Используйте актуальную версию Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'  # Укажите необходимую версию Node.js
+          node-version: '14'
 
-      - name: Install dependencies
-        run: npm ci  # Установка зависимостей из package-lock.json
+      - name: Install project dependencies
+        run: npm ci
 
-      - name: Lint code
-        run: npm run lint  # Убедитесь, что в package.json есть скрипт для линтинга
+      - name: Lint the code
+        run: npm run lint
 
-       - name: Run tests
-        run: npm test -- --timeout=10000 # Проверка работоспособности
+      - name: Run tests
+        run: npm test -- --timeout=10000  # Убедитесь, что вы используете правильное количество пробелов
