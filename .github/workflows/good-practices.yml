@@ -11,16 +11,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Cache npm dependencies
+        uses: actions/cache@v3
         with:
-          node-version: '14'
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
 
-      - name: Install project dependencies
-        run: npm install  # Заменили npm ci на npm install
+      - name: Install dependencies
+        run: npm install
 
-      - name: Lint the code
+      - name: Lint code
         run: npm run lint
 
       - name: Run tests
-        run: npm test -- --timeout=10000
+        run: npm test
