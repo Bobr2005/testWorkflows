@@ -9,18 +9,18 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2  # Используй последнюю версию действия
+        uses: actions/checkout@v2  # Используется актуальная версия
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2  # Установка Node.js с помощью официального действия
+        uses: actions/setup-node@v2  # Установка Node.js
         with:
-          node-version: '14'  # Явное указание версии Node.js
+          node-version: '16'  # Указываем конкретную версию Node.js
 
       - name: Install dependencies
-        run: npm install  # Установка зависимостей без sudo
+        run: npm ci  # Используем npm ci для установки зависимостей
 
       - name: Lint code
-        run: npm run lint  # Предполагается, что lint скрипт есть в package.json
+        run: npm run lint  # Запускаем линтинг через npm скрипт
 
       - name: Run tests
-        run: npm test  # Запуск тестов
+        run: npm test  # Запускаем тесты
