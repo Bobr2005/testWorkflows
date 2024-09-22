@@ -23,4 +23,4 @@ jobs:
         run: npm run lint  # Убедитесь, что в package.json есть скрипт для линтинга
 
        - name: Run tests
-        run: npm test -- --timeout=10000
+        run: npm test -- --timeout=10000 # Проверка работоспособности
