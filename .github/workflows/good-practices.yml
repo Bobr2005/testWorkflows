@@ -9,21 +9,21 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3  # Используйте последнюю версию
 
-      - name: Cache npm dependencies
-        uses: actions/cache@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3  # Настройка Node.js
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
+          node-version: '14'  # Укажите версию Node.js
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci  # Используйте npm ci вместо npm install, если lock-файла нет, просто установите зависимости
+
+      - name: Install ESLint
+        run: npm install eslint --save-dev  # Установите ESLint как dev-зависимость
 
       - name: Lint code
-        run: npm run lint
+        run: npx eslint .  # Запустите ESLint
 
       - name: Run tests
-        run: npm test
+        run: npm test  # Запустите тесты
