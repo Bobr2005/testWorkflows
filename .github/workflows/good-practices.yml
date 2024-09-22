@@ -20,7 +20,7 @@ jobs:
         run: npm install  # Установка зависимостей
 
       - name: Lint code
-        run: npm run lint  # Запускаем линтинг через npm скрипт
+        run: npm install eslint  # Запускаем линтинг через npm скрипт
 
       - name: Run tests
         run: npm test  # Запускаем тесты
