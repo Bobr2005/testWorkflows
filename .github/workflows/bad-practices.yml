@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - master # 1. Плохая практика: использование ветки master вместо main или dev.
+      - main
 
 jobs:
   build:
