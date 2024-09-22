@@ -17,10 +17,10 @@ jobs:
           node-version: '14'
 
       - name: Install project dependencies
-        run: npm ci
+        run: npm install  # Заменили npm ci на npm install
 
       - name: Lint the code
         run: npm run lint
 
       - name: Run tests
-        run: npm test -- --timeout=10000  # Убедитесь, что вы используете правильное количество пробелов
+        run: npm test -- --timeout=10000
