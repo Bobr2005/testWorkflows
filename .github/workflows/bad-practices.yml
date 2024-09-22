@@ -9,17 +9,17 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v1 # 2. Плохая практика: использование устаревшей версии checkout вместо актуальной версии v3.
+        uses: actions/checkout@v1 
 
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y nodejs npm # 3. Плохая практика: отсутствие версионирования зависимостей, что может привести к непредсказуемым результатам при изменении версий пакетов.
+          sudo apt-get install -y nodejs npm 
 
       - name: Lint code
         run: |
-          npm install eslint # 4. Плохая практика: установка зависимостей напрямую в CI/CD без использования package-lock.json.
+          npm install eslint 
 
       - name: Run tests
         run: |
-          npm test # 5. Плохая практика: отсутствие тайм-аута или лимита времени на выполнение тестов, что может привести к зависанию процесса.
+          npm test 
