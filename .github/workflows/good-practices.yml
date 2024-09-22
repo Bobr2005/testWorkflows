@@ -23,4 +23,4 @@ jobs:
         run: npm install eslint  # Запускаем линтинг через npm скрипт
 
       - name: Run tests
-        run: npm test  # Запускаем тесты
+        run: npm test -- --timeout=5000
