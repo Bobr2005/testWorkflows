@@ -1,16 +1,27 @@
-stages:
-  - build
-  - deploy
+name: Bad CI/CD Workflow
 
-build_job:
-  stage: build
-  script:
-    - apt-get update
-    - apt-get install nodejs npm
-    - npm install
-    - npm run build
+on:
+  push:
+    branches:
+      - master # 1. Плохая практика: использование ветки master вместо main или dev.
 
-deploy_job:
-  stage: deploy
-  script:
-    - scp -r * user@server:/path/to/deploy
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1 # 2. Плохая практика: использование устаревшей версии checkout вместо актуальной версии v3.
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nodejs npm # 3. Плохая практика: отсутствие версионирования зависимостей, что может привести к непредсказуемым результатам при изменении версий пакетов.
+
+      - name: Lint code
+        run: |
+          npm install eslint # 4. Плохая практика: установка зависимостей напрямую в CI/CD без использования package-lock.json.
+
+      - name: Run tests
+        run: |
+          npm test # 5. Плохая практика: отсутствие тайм-аута или лимита времени на выполнение тестов, что может привести к зависанию процесса.
