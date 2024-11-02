@@ -9,18 +9,18 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2  # Используется актуальная версия
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2  # Установка Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: '16'  # Указываем конкретную версию Node.js
+          node-version: '16'
 
       - name: Install dependencies
-        run: npm install  # Установка зависимостей
+        run: npm install
 
       - name: Lint code
-        run: npm install eslint  # Запускаем линтинг через npm скрипт
+        run: npm install eslint
 
       - name: Run tests
         run: npm test -- --timeout=5000
