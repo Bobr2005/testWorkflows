@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout code
@@ -28,7 +28,7 @@ jobs:
         run: npm install
 
       - name: Lint code
-        run: npx eslint .
+        run: npm install eslint
 
       - name: Run tests
         run: npm test -- --timeout=5000
