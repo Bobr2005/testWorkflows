@@ -18,10 +18,12 @@ jobs:
 
       - name: Authenticate with Doppler
         run: |
-          doppler setup --project "${{ secrets.DOPPLER_PROJECT }}" \
-                        --config "${{ secrets.DOPPLER_CONFIG }}" \
-                        --token "${{ secrets.DOPPLER_TOKEN }}"
-
+          env:
+            DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+          run: |
+            doppler setup --project ci-cd-study --config dev-personal
+            doppler secrets download --no-file --format env > .doppler.env
+            source .doppler.env
       - name: Use secrets
         run: |
           doppler run -- echo "Using secrets in the pipeline"
