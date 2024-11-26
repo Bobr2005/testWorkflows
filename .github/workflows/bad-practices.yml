@@ -19,7 +19,8 @@ jobs:
       - name: Authenticate with Doppler
         run: |
           doppler setup --project "${{ secrets.DOPPLER_PROJECT }}" \
-                        --config "${{ secrets.DOPPLER_CONFIG }}"
+                        --config "${{ secrets.DOPPLER_CONFIG }}" \
+                        --token "${{ secrets.DOPPLER_TOKEN }}"
 
       - name: Use secrets
         run: |
