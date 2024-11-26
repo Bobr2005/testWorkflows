@@ -1,22 +1,28 @@
+name: CI/CD Workflow with Doppler
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
-      - name: Checkout репозиторий
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Запуск контейнера с Doppler CLI
-        run: |
-          docker run --rm -v $PWD:/workspace -w /workspace curl -sSL https://cli.doppler.com/install.sh | sh
-          
-      - name: Аутентификация в Doppler
-        run: doppler login --token ${{ secrets.DOPPLER_TOKEN }}
+      - name: Set up Doppler CLI
+        run: curl -sLf --retry 3 https://cli.doppler.com/install.sh | sh
 
-      - name: Получить секреты
-        run: doppler secrets download --no-file
-
-      - name: Использовать секреты
+      - name: Retrieve Secrets from Doppler
         run: |
-          SECRET_KEY=$(doppler secrets get SECRET_KEY)
-          echo "Использую секретный ключ."
+          doppler run --command "echo 'Secrets Loaded!'"
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+          echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
+
+      - name: Use Secrets
+        run: |
+          echo "Using DB_PASSWORD and API_KEY..."
+          # Ваши команды, использующие секреты
