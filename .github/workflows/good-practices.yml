@@ -7,23 +7,21 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout репозиторий
         uses: actions/checkout@v2
 
-      - name: Download Doppler
-        run: |
-          curl -sSL https://cli.doppler.com/install.sh | sh
+      - name: Использовать Doppler CLI
+        uses: dopplerhq/doppler-action@v2
+        with:
+          token: ${{ secrets.DOPPLER_TOKEN }}
 
-      - name: Aut Doppler
-        run: doppler login --token ${{ secrets.DOPPLER_TOKEN }}
-
-      - name: get secrets
+      - name: Получить секреты
         run: doppler secrets download --no-file
 
-      - name: using secrets
+      - name: Использовать секреты
         run: |
           SECRET_KEY=$(doppler secrets get SECRET_KEY)
           echo "Использую секретный ключ."
