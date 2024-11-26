@@ -1,25 +1,25 @@
+name: CI/CD Pipeline
+
 on:
   push:
     branches:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v1 
+        uses: actions/checkout@v2
 
-      - name: Install dependencies
+      - name: Set up Doppler CLI
+        uses: dopplerhq/doppler-action@v1
+        with:
+          doppler-token: ${{ secrets.DOPPLER_TOKEN }}
+          project: ${{ secrets.DOPPLER_PROJECT }}
+
+      - name: Use secrets
         run: |
-          sudo apt-get update
-          sudo apt-get install -y nodejs npm 
-
-      - name: Lint code
-        run: npm install eslint
-           
-
-      - name: Run tests
-        run: npm test 
-          
+          echo "Using secrets in the pipeline"
+          echo "DB_PASSWORD=$DB_PASSWORD"
+          echo "API_KEY=$API_KEY"
