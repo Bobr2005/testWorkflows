@@ -14,11 +14,14 @@ jobs:
 
       - name: Install Doppler CLI
         run: |
-          # Скачиваем Doppler CLI
+          # Скачиваем Doppler CLI для Linux
           curl -sSL https://cli.doppler.com/download/linux/amd64 -o doppler-cli.tar.gz
-          # Распаковываем архив в директорию /usr/local/bin (или любую другую, доступную в PATH)
+          # Проверяем, что файл существует
+          ls -l doppler-cli.tar.gz
+          # Распаковываем архив (файл должен быть в формате tar.gz)
           tar -xvzf doppler-cli.tar.gz
-          sudo mv doppler /usr/local/bin/  # Копируем в PATH для доступности
+          # Перемещаем исполнимый файл в PATH для доступности
+          sudo mv doppler /usr/local/bin/
 
       - name: Authenticate with Doppler
         run: doppler login --token ${{ secrets.DOPPLER_TOKEN }}
