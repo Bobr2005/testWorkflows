@@ -14,14 +14,16 @@ jobs:
 
       - name: Install Doppler CLI
         run: |
-          # Скачиваем и устанавливаем Doppler CLI с правами суперпользователя
           curl -sSfL https://cli.doppler.com/install.sh | sudo sh
 
       - name: Authenticate with Doppler
-        run: doppler login --token ${{ secrets.DOPPLER_TOKEN }}
+        run: |
+          doppler setup --config "${{ secrets.DOPPLER_CONFIG }}" \
+                        --project "${{ secrets.DOPPLER_PROJECT }}" \
+                        --environment "${{ secrets.DOPPLER_ENVIRONMENT }}"
 
       - name: Use secrets
         run: |
           doppler run -- echo "Using secrets in the pipeline"
-          doppler run -- echo "DB_PASSWORD=$DB_PASSWORD"
-          doppler run -- echo "API_KEY=$API_KEY"
+          doppler run -- echo "BOBRINA=$BOBRINA"
+          doppler run -- echo "ANIRBOB=$ANIRBOB"
