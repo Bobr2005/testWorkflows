@@ -12,14 +12,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Doppler CLI
-        uses: dopplerhq/doppler-action@v3
-        with:
-          doppler-token: ${{ secrets.DOPPLER_TOKEN }}
-          project: ${{ secrets.DOPPLER_PROJECT }}
+      - name: Install Doppler CLI
+        run: |
+          curl -sSL https://cli.doppler.com/install.sh | bash
+
+      - name: Authenticate with Doppler
+        run: doppler login --token ${{ secrets.DOPPLER_TOKEN }}
 
       - name: Use secrets
         run: |
-          echo "Using secrets in the pipeline"
-          echo "DB_PASSWORD=$DB_PASSWORD"
-          echo "API_KEY=$API_KEY"
+          doppler run -- echo "Using secrets in the pipeline"
+          doppler run -- echo "DB_PASSWORD=$DB_PASSWORD"
+          doppler run -- echo "API_KEY=$API_KEY"
