@@ -13,14 +13,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install Doppler CLI
-        run: |
-          # Скачиваем исполнимый файл Doppler CLI для Linux
-          curl -sSL https://cli.doppler.com/download/linux/amd64 -o doppler
-          # Даем права на выполнение файла
-          chmod +x doppler
-          # Перемещаем в директорию /usr/local/bin для доступности
-          sudo mv doppler /usr/local/bin/
-
+        run: |    
+          curl -sSfL https://cli.doppler.com/install.sh | sh
       - name: Authenticate with Doppler
         run: doppler login --token ${{ secrets.DOPPLER_TOKEN }}
 
