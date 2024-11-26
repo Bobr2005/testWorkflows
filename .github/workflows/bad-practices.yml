@@ -20,7 +20,7 @@ jobs:
         env:
           DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
         run: |
-          doppler setup --project ci-cd-study --config dev
+          doppler setup --project ci-cd-study --config dev_personal
 
       - name: Use secrets
         env:
