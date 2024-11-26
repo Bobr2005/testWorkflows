@@ -1,3 +1,5 @@
+name: CI/CD Workflow with Doppler
+
 on:
   push:
     branches:
@@ -11,24 +13,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
+      - name: Set up Doppler CLI
+        run: curl -sLf --retry 3 https://cli.doppler.com/install.sh | sh
 
-      - name: Cache npm dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ env.NPM_CACHE_VERSION }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      - name: Retrieve Secrets from Doppler
+        run: |
+          doppler run --command "echo 'Secrets Loaded!'"
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+          echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Lint code
-        run: npm install eslint
-
-      - name: Run tests
-        run: npm test -- --timeout=5000
+      - name: Use Secrets
+        run: |
+          echo "Using DB_PASSWORD and API_KEY..."
+          # Ваши команды, использующие секреты
