@@ -1,28 +1,19 @@
-name: CI/CD Workflow with Doppler
+name: Export Secrets to Doppler
 
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
 
 jobs:
-  build:
-    runs-on: ubuntu-24.04
-
+  export-to-doppler:
+    runs-on: ubuntu-latest
+    name: export GitHub secrets to Doppler
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Doppler CLI
-        run: curl -sLf --retry 3 https://cli.doppler.com/install.sh | sh
-
-      - name: Retrieve Secrets from Doppler
-        run: |
-          doppler run --command "echo 'Secrets Loaded!'"
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
-          echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
-
-      - name: Use Secrets
-        run: |
-          echo "Using DB_PASSWORD and API_KEY..."
-          # Ваши команды, использующие секреты
+    - name: Install Doppler CLI
+      uses: dopplerhq/cli-action@v3
+    - name: Upload Secrets to Doppler
+      run: doppler secrets upload --project "$DOPPLER_TARGET_PROJECT" --config "$DOPPLER_TARGET_CONFIG"  --silent <(echo "$GITHUB_SECRETS" | jq 'del(.github_token, .DOPPLER_TOKEN, .DOPPLER_TARGET_PROJECT, .DOPPLER_TARGET_CONFIG) | with_entries( .key |= ascii_upcase )')
+      shell: bash
+      env:
+        DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+        DOPPLER_TARGET_PROJECT: ${{ secrets.DOPPLER_TARGET_PROJECT }}
+        DOPPLER_TARGET_CONFIG: ${{ secrets.DOPPLER_TARGET_CONFIG }}
+        GITHUB_SECRETS: ${{ toJson(secrets) }}
