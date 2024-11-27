@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -26,6 +26,6 @@ jobs:
         env:
           DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
         run: |
-          doppler run -- echo "Using secrets in the pipeline"
+          doppler run -- echo "Здесь могла бы быть ваша реклама"
           doppler run -- echo "BOBRINA=$BOBRINA"
           doppler run -- echo "ANIRBOB=$ANIRBOB"
