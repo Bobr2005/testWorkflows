@@ -18,13 +18,13 @@ jobs:
 
       - name: Authenticate with Doppler
         env:
-          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+          TOKEN: ${{ secrets.TOKEN }}
         run: |
           doppler setup --project ci-cd-study --config dev_personal
 
       - name: Use secrets
         env:
-          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+          TOKEN: ${{ secrets.TOKEN }}
         run: |
           doppler run -- echo "Здесь могла бы быть ваша реклама"
           doppler run -- echo "BOBRINA=$BOBRINA"
