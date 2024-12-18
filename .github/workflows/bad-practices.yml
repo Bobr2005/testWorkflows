@@ -12,17 +12,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Doppler and Fetch Secrets
+      - name: Install Doppler CLI
         uses: dopplerhq/cli-action@v1
-        with:
-          doppler-token: ${{ secrets.DOPPLER_TOKEN }}
-          mount-secrets: true 
 
-      - name: Use secrets
-        env:
-          BOBRINA: ${{ env.BOBRINA }}
-          ANIRBOB: ${{ env.ANIRBOB }}
+      - name: Fetch secrets using Doppler
         run: |
-          echo "Здесь могла бы быть ваша реклама"
-          echo "BOBRINA=$BOBRINA"
-          echo "ANIRBOB=$ANIRBOB"
+          doppler run -- echo "Здесь могла бы быть ваша реклама" && \
+          doppler run -- printenv | grep -E "BOBRINA|ANIRBOB"
