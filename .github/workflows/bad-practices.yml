@@ -16,6 +16,8 @@ jobs:
         uses: dopplerhq/cli-action@v1
 
       - name: Fetch secrets using Doppler
+        env:
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
         run: |
           doppler run -- echo "Здесь могла бы быть ваша реклама" && \
           doppler run -- printenv | grep -E "BOBRINA|ANIRBOB"
